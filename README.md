@@ -4,9 +4,12 @@
 [![LangGraph](https://img.shields.io/badge/orchestration-LangGraph-orange.svg)](https://github.com/langchain-ai/langgraph)
 [![Qdrant](https://img.shields.io/badge/vector--db-Qdrant-red.svg)](https://qdrant.tech/)
 [![Neo4j](https://img.shields.io/badge/knowledge--graph-Neo4j-008CC1.svg)](https://neo4j.com/)
+[![Interview Guide](https://img.shields.io/badge/Interview%20Guide-interview.md-brightgreen.svg)](interview.md)
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
 
 A production-grade, enterprise-ready **Hybrid GraphRAG** system for multi-page PDF document question answering. Combines **layout-aware document parsing**, **parent-child hierarchical chunking**, **open-ended knowledge graph extraction with post-hoc type normalization**, **dual-vector hybrid retrieval (Dense + BM25 via Qdrant RRF)**, **Cross-Encoder reranking**, and a **stateful, self-correcting LangGraph agentic loop** with citation grounding and hallucination verification.
+
+> 📖 **Comprehensive Interview Preparation Guide**: For an exhaustive, end-to-end breakdown from foundational concepts to production-grade system design questions and free study resources, see [**`interview.md`**](interview.md).
 
 ---
 
