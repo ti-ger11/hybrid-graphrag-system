@@ -18,11 +18,11 @@ A production-grade, enterprise-ready **Hybrid GraphRAG** system for multi-page P
 ```mermaid
 flowchart TD
     subgraph Ingestion ["Ingestion & Indexing Pipeline"]
-        PDF["Multi-Page PDF"] --> Parser["Layout-Aware Parser\n(Unstructured / PDFMiner)"]
+        PDF["Multi-Page PDF"] --> Parser["Layout-Aware Parser<br/>(Unstructured / PDFMiner)"]
         Parser --> Chunker["Parent-Child Hierarchical Chunker"]
-        Chunker -->|Parent Chunks (Large Context)| ParentStore["Parent Metadata Store"]
-        Chunker -->|Child Chunks (Precision)| ChildEmbeddings["Embedding Generation\n(Dense + BM25 Sparse)"]
-        ChildEmbeddings --> Qdrant[("Qdrant Vector DB\n(Dense + Sparse RRF)")]
+        Chunker -->|"Parent Chunks (Large Context)"| ParentStore["Parent Metadata Store"]
+        Chunker -->|"Child Chunks (Precision)"| ChildEmbeddings["Embedding Generation<br/>(Dense + BM25 Sparse)"]
+        ChildEmbeddings --> Qdrant[("Qdrant Vector DB<br/>Dense + Sparse RRF")]
         Chunker --> KGExtract["LLM Entity & Relation Extractor"]
         KGExtract --> KGNorm["Type Normalizer"]
         KGNorm --> Neo4j[("Neo4j Knowledge Graph")]
@@ -30,20 +30,20 @@ flowchart TD
 
     subgraph AgenticLoop ["LangGraph Agentic Self-Correction Loop"]
         UserQuery(["User Question"]) --> QA["1. Query Analysis & Entity Extraction"]
-        QA --> HR["2. 3-Way Hybrid Retrieval\n(Dense + BM25 RRF + KG Context)"]
-        HR --> CE["3. Cross-Encoder Reranking\n(ms-marco-MiniLM-L-6-v2)"]
-        CE --> Grader{"4. Document Grading\n(LLM-as-Judge)"}
+        QA --> HR["2. 3-Way Hybrid Retrieval<br/>(Dense + BM25 RRF + KG Context)"]
+        HR --> CE["3. Cross-Encoder Reranking<br/>(ms-marco-MiniLM-L-6-v2)"]
+        CE --> Grader{"4. Document Grading<br/>(LLM-as-Judge)"}
         
-        Grader -->|Relevant| Gen["5. Grounded Generation\n(Inline [Source N, Page P] Citations)"]
-        Grader -->|Not Relevant & Retries < 3| Rewrite["Query Rewriting"]
+        Grader -->|"Relevant"| Gen["5. Grounded Generation<br/>(Inline Citations)"]
+        Grader -->|"Not Relevant (Retries < 3)"| Rewrite["Query Rewriting"]
         Rewrite --> HR
-        Grader -->|Not Relevant & Retries >= 3| FallbackGen["Fallback Generation\n(Best-Effort Caveats)"]
+        Grader -->|"Not Relevant (Retries >= 3)"| FallbackGen["Fallback Generation<br/>(Best-Effort Caveats)"]
 
-        Gen --> HallucinationGuard{"6. Hallucination Check\n(Faithfulness Audit)"}
+        Gen --> HallucinationGuard{"6. Hallucination Check<br/>(Faithfulness Audit)"}
         FallbackGen --> Output(["Final Answer + Citations"])
-        HallucinationGuard -->|Grounded| Output
-        HallucinationGuard -->|Not Grounded & Retry < 2| Gen
-        HallucinationGuard -->|Max Gen Retries Hit| Output
+        HallucinationGuard -->|"Grounded"| Output
+        HallucinationGuard -->|"Not Grounded (Retry < 2)"| Gen
+        HallucinationGuard -->|"Max Gen Retries Hit"| Output
     end
 ```
 
