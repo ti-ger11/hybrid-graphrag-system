@@ -1,0 +1,36 @@
+# Environment
+.env
+.venv/
+venv/
+
+# Python
+__pycache__/
+*.pyc
+*.pyo
+*.egg-info/
+dist/
+build/
+*.egg
+
+# Data
+data/*.pdf
+data/**/*.pdf
+!data/.gitkeep
+
+# IDE
+.vscode/
+.idea/
+*.swp
+*.swo
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Models cache
+models/
+.cache/
+
+# Docker
+neo4j_data/
+qdrant_storage/

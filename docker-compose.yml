@@ -1,0 +1,41 @@
+services:
+  qdrant:
+    image: qdrant/qdrant:latest
+    container_name: graphrag-qdrant
+    restart: unless-stopped
+    ports:
+      - "6333:6333"  # REST API
+      - "6334:6334"  # gRPC
+    volumes:
+      - qdrant_storage:/qdrant/storage
+    healthcheck:
+      test: ["CMD-SHELL", "curl -f http://localhost:6333/healthz || exit 1"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+
+  neo4j:
+    image: neo4j:community
+    container_name: graphrag-neo4j
+    restart: unless-stopped
+    ports:
+      - "7474:7474"  # Browser UI
+      - "7687:7687"  # Bolt protocol
+    volumes:
+      - neo4j_data:/data
+      - neo4j_logs:/logs
+    environment:
+      - NEO4J_AUTH=neo4j/graphrag_password
+      - NEO4J_PLUGINS=["apoc"]
+      - NEO4J_dbms_security_procedures_unrestricted=apoc.*
+      - NEO4J_dbms_security_procedures_allowlist=apoc.*
+    healthcheck:
+      test: ["CMD-SHELL", "cypher-shell -u neo4j -p graphrag_password 'RETURN 1' || exit 1"]
+      interval: 10s
+      timeout: 10s
+      retries: 5
+
+volumes:
+  qdrant_storage:
+  neo4j_data:
+  neo4j_logs:

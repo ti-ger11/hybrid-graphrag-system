@@ -1,0 +1,70 @@
+[project]
+name = "hybrid-graphrag"
+version = "0.1.0"
+description = "Production-grade Hybrid GraphRAG system for multi-page PDF document Q&A"
+readme = "README.md"
+requires-python = ">=3.11"
+
+dependencies = [
+    # === LangChain Core ===
+    "langchain>=0.3.0",
+    "langchain-core>=0.3.0",
+    "langchain-google-genai>=2.0.0",
+    "langchain-openai>=0.2.0",
+    "langchain-community>=0.3.0",
+    "langchain-text-splitters>=0.3.0",
+    "pypdf>=4.0.0",
+
+    # === Knowledge Graph ===
+    "langchain-neo4j>=0.2.0",
+    "neo4j>=5.0.0",
+
+    # === Vector Store ===
+    "langchain-qdrant>=0.2.0",
+    "qdrant-client>=1.12.0",
+    "fastembed>=0.4.0",
+
+    # === Reranking ===
+    "langchain-huggingface>=0.1.0",
+    "sentence-transformers>=3.0.0",
+
+    # === Agentic Orchestration ===
+    "langgraph>=0.2.0",
+
+    # === PDF Parsing ===
+    "unstructured[pdf]>=0.16.0",
+
+    # === Configuration ===
+    "pydantic>=2.0.0",
+    "pydantic-settings>=2.0.0",
+    "python-dotenv>=1.0.0",
+
+    # === UI ===
+    "streamlit>=1.38.0",
+]
+
+[project.optional-dependencies]
+dev = [
+    "pytest>=8.0.0",
+    "pytest-asyncio>=0.24.0",
+    "ruff>=0.7.0",
+]
+
+[build-system]
+requires = ["setuptools>=75.0.0"]
+build-backend = "setuptools.build_meta"
+
+[tool.setuptools.packages.find]
+where = ["."]
+include = ["src*"]
+
+[tool.ruff]
+line-length = 100
+target-version = "py311"
+
+[tool.ruff.lint]
+select = ["E", "F", "I", "UP", "B"]
+
+[tool.pytest.ini_options]
+asyncio_mode = "auto"
+testpaths = ["tests"]
