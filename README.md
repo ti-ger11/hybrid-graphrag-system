@@ -134,8 +134,8 @@ docker compose up -d
 ```
 
 Verify services:
-- **Qdrant Dashboard**: [http://localhost:6333/dashboard](http://localhost:6333/dashboard)
-- **Neo4j Browser**: [http://localhost:7474](http://localhost:7474) (Username: `neo4j`, Password: `graphrag_password`)
+- **Qdrant Dashboard**: Accessible via port `6333` (`/dashboard`)
+- **Neo4j Browser**: Accessible via port `7474` (Default: `neo4j` / `graphrag_password`)
 
 ### 3. Setup Python Environment
 ```bash
@@ -167,7 +167,7 @@ QDRANT_COLLECTION_NAME=document_chunks
 ```bash
 streamlit run src/ui/app.py
 ```
-Open your browser at `http://localhost:8501`. Upload any multi-page PDF in the sidebar, click **Ingest Document**, and start asking questions!
+Open your browser at the local Streamlit port (default `8501`). Upload any multi-page PDF in the sidebar, click **Ingest Document**, and start asking questions!
 
 ---
 
